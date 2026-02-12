@@ -20,10 +20,10 @@ defineProps<{
 </script>
 
 <template>
-    <AuthBase
-        title="Log in to your account"
-        description="Enter your email and password below to log in"
-    >
+<!--    <AuthBase-->
+<!--        title="Log in to your account"-->
+<!--        description="Enter your email and password below to log in"-->
+<!--    >-->
         <Head title="Log in" />
 
         <div
@@ -106,5 +106,5 @@ defineProps<{
                 <TextLink :href="register()" :tabindex="5">Sign up</TextLink>
             </div>
         </Form>
-    </AuthBase>
+<!--    </AuthBase>-->
 </template>

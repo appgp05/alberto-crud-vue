@@ -12,10 +12,10 @@ import { store } from '@/routes/register';
 </script>
 
 <template>
-    <AuthBase
-        title="Create an account"
-        description="Enter your details below to create your account"
-    >
+<!--    <AuthBase-->
+<!--        title="Create an account"-->
+<!--        description="Enter your details below to create your account"-->
+<!--    >-->
         <Head title="Register" />
 
         <Form
@@ -104,5 +104,5 @@ import { store } from '@/routes/register';
                 >
             </div>
         </Form>
-    </AuthBase>
+<!--    </AuthBase>-->
 </template>
