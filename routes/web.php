@@ -1,8 +1,8 @@
 <?php
 
+use App\Http\Controllers\ProjectController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-use Laravel\Fortify\Features;
 
 Route::redirect('/', '/main');
 
@@ -10,9 +10,11 @@ Route::get('/main', function () {
     return Inertia::render('Main');
 })->name('main');
 
-Route::get('/projects', function () {
+Route::get('/projects-list', function () {
     return Inertia::render('Projects-list');
-})->name('projects');
+})->name('projects-list');
+
+Route::resource('project', ProjectController::class);
 
 //Route::get('/', function () {
 //    return Inertia::render('Welcome', [

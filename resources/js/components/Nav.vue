@@ -3,7 +3,7 @@
 <template>
     <div>
         <a href="main" class="btn btn-primary">Main</a>
-        <a href="projects" class="btn btn-primary">Projects</a>
+        <a href="projects-list" class="btn btn-primary">Projects</a>
     </div>
 </template>
 
