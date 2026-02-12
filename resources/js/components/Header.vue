@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { usePage, Link } from '@inertiajs/vue3';
+import { computed } from 'vue';
+import { logout } from '@/routes';
 
-const user = usePage().props.auth.user;
+const user = computed(() => usePage().props.auth.user);
 const emit = defineEmits<{
     (e: 'open-modal', type: 'login' | 'register'): void;
 }>();
@@ -10,6 +12,7 @@ const emit = defineEmits<{
 <template>
     <div class="h-20 w-full bg-blue-500">
         <button
+            v-if="!user"
             @click="emit('open-modal', 'login')"
             class="btn btn-sm btn-primary"
         >
@@ -17,19 +20,22 @@ const emit = defineEmits<{
         </button>
 
         <button
+            v-if="!user"
             @click="emit('open-modal', 'register')"
             class="btn btn-sm btn-primary"
         >
             Registrarme
         </button>
-        <!--        <Link href="/login" v-if="!user" class="btn btn-primary"-->
-        <!--            >Iniciar sesión</Link-->
-        <!--        >-->
-        <!--        <Link :href="register()" v-if="!user" class="btn btn-primary"-->
-        <!--            >Registrarme</Link-->
-        <!--        >-->
-        <!--        <p v-if="user">Bienvenido, {{ user.name }}</p>-->
-        <!--        <Link :href="logout()" class="btn btn-primary">Cerrar sesión</Link>-->
+
+        <Link
+            v-if="user"
+            :href="logout()"
+            method="post"
+            as="button"
+            class="btn btn-primary"
+        >
+            Cerrar sesión
+        </Link>
     </div>
 </template>
 
