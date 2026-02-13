@@ -10,9 +10,7 @@ Route::get('/main', function () {
     return Inertia::render('Main');
 })->name('main');
 
-Route::get('/projects-list', function () {
-    return Inertia::render('Projects-list');
-})->name('projects-list');
+Route::get('/projects-list', [ProjectController::class, 'index'])->name('projects-list');
 
 Route::resource('project', ProjectController::class);
 

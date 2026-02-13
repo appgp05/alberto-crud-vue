@@ -10,9 +10,11 @@ class ProjectController extends Controller
     //
     public function index()
     {
-        $projects = Project::latest()->get();
+        $projects = Project::query()->paginate(2);
+        $headers = Project::all()->first()->getFillable();
 
-        return Inertia::render('Projects/Index', [
+        return Inertia::render('Projects-list', [
+            'headers' => $headers,
             'projects' => $projects
         ]);
     }
