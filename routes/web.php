@@ -10,6 +10,10 @@ Route::get('/main', function () {
     return Inertia::render('Main');
 })->name('main');
 
+Route::get('/cronometro', function () {
+    return Inertia::render('Cronometro');
+})->name('cronometro');
+
 Route::get('/projects-list', [ProjectController::class, 'index'])->name('projects-list');
 
 Route::resource('project', ProjectController::class);

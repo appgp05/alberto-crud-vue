@@ -1,18 +1,17 @@
 <script setup lang="ts">
-import Header from '@/components/Header.vue';
-import Nav from '@/components/Nav.vue';
 import Table from '@/components/Table.vue';
+import Layout from '@/layouts/Layout.vue';
 
 defineProps({
     headers: Array<any>,
-    projects: Array<any>
+    projects: Array<any>,
 });
 </script>
 
 <template>
-    <Header></Header>
-    <Nav></Nav>
-    <Table :fields="headers" :rows="projects" :item="'project'"></Table>
+    <layout>
+        <Table :fields="headers" :rows="projects" :item="'project'"></Table>
+    </layout>
 </template>
 
 <style scoped></style>
