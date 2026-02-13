@@ -18,4 +18,11 @@ class ProjectController extends Controller
             'projects' => $projects
         ]);
     }
+
+    public function destroy(Project $project)
+    {
+        $project->delete();
+
+        return redirect()->back();
+    }
 }
