@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProjectController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -14,8 +15,10 @@ Route::get('/cronometro', function () {
     return Inertia::render('Cronometro');
 })->name('cronometro');
 
+Route::get('/users-list', [UserController::class, 'index'])->name('users-list');
 Route::get('/projects-list', [ProjectController::class, 'index'])->name('projects-list');
 
+Route::resource('user', UserController::class);
 Route::resource('project', ProjectController::class);
 
 //Route::get('/', function () {

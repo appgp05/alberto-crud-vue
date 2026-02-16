@@ -4,13 +4,13 @@ import Layout from '@/layouts/Layout.vue';
 
 defineProps({
     headers: Array<any>,
-    projects: Array<any>,
+    users: Array<any>,
 });
 </script>
 
 <template>
     <layout>
-        <Table :fields="headers" :rows="projects" :item="'project'"></Table>
+        <Table :fields="headers" :rows="users" :item="'user'"></Table>
     </layout>
 </template>
 

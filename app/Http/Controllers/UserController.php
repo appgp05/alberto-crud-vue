@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
+use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class UserController extends Controller
 {
@@ -14,6 +16,14 @@ class UserController extends Controller
     public function index()
     {
         //
+        $users = User::query()->paginate(5);
+//        dd($users->all());
+        $headers = User::all()->first()->getFillable();
+
+        return Inertia::render('Users-list', [
+            'headers' => $headers,
+            'users' => $users
+        ]);
     }
 
     /**
@@ -51,9 +61,15 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateUserRequest $request, User $user)
+    public function update(Request $request, User $user)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|string',
+            'email' => 'required|string',
+        ]);
+
+        $user->update($validated);
+        return redirect()->back();
     }
 
     /**
@@ -61,6 +77,8 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        //
+        $user->delete();
+
+        return redirect()->back();
     }
 }
