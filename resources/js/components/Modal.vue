@@ -16,7 +16,7 @@ const emit = defineEmits(['close']);
             class="bg-opacity-50 fixed inset-0 z-50 flex items-center justify-center"
         >
             <div
-                class="max-h-[70vh] w-full max-w-md rounded-lg bg-white p-6 shadow-xl"
+                class="h-fit w-full max-w-md rounded-lg bg-white p-6 shadow-xl"
             >
                 <div class="mt-6 flex justify-end">
                     <button

@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { Link, router } from '@inertiajs/vue3';
+import { Link, router, useForm } from '@inertiajs/vue3';
+import { ref } from 'vue';
 import Modal from '@/components/Modal.vue';
 
 const props = defineProps({
@@ -7,6 +8,32 @@ const props = defineProps({
     rows: Object,
     item: String,
 });
+
+const showModal = ref(false);
+
+const form = useForm({
+    id: null,
+    name: '',
+    description: '',
+});
+
+const openEditModal = (row: any) => {
+    form.id = row.id;
+    form.name = row.name || '';
+    form.description = row.description || '';
+    showModal.value = true;
+};
+
+const closeModal = () => {
+    showModal.value = false;
+    form.reset();
+};
+
+const updateRow = () => {
+    form.put(`${props.item}/${form.id}`, {
+        onSuccess: () => closeModal()
+    });
+};
 
 const deleteRow = (id: number) => {
     if (confirm('¿Estás seguro de eliminar este proyecto?')) {
@@ -16,8 +43,53 @@ const deleteRow = (id: number) => {
 </script>
 
 <template>
-    <Modal :show="true">
-        
+    <Modal :show="showModal" @close="closeModal()">
+        <div class="p-6">
+            <h3 class="mb-4 text-lg font-bold">Modificar {{ item }}</h3>
+
+            <form @submit.prevent="updateRow" class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium">Nombre</label>
+                    <input
+                        v-model="form.name"
+                        type="text"
+                        class="w-full rounded border p-2"
+                        required
+                    />
+                    <div v-if="form.errors.name" class="text-xs text-red-500">
+                        {{ form.errors.name }}
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium">Descripción</label>
+                    <textarea
+                        v-model="form.description"
+                        class="w-full rounded border p-2"
+                    ></textarea>
+                </div>
+
+                <div class="mt-4 flex justify-end gap-2">
+                    <button
+                        type="button"
+                        @click="closeModal"
+                        class="btn rounded border px-4 py-2"
+                    >
+                        Cancelar
+                    </button>
+                    <button
+                        type="submit"
+                        @click="updateRow"
+                        class="rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700"
+                        :disabled="form.processing"
+                    >
+                        {{
+                            form.processing ? 'Guardando...' : 'Guardar Cambios'
+                        }}
+                    </button>
+                </div>
+            </form>
+        </div>
     </Modal>
 
     <div class="overflow-x-auto">
@@ -33,6 +105,14 @@ const deleteRow = (id: number) => {
                 <tr v-for="row in rows?.data" :key="row.id">
                     <td v-for="field in fields" :key="field">
                         {{ row[field] }}
+                    </td>
+                    <td>
+                        <button
+                            @click="openEditModal(row)"
+                            class="rounded bg-yellow-500 px-3 py-1 text-sm text-white transition hover:bg-yellow-600"
+                        >
+                            Modificar
+                        </button>
                     </td>
                     <td>
                         <button
