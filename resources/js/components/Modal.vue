@@ -1,10 +1,7 @@
 <script setup lang="ts">
-import Login from '@/pages/auth/Login.vue';
-import Register from '@/pages/auth/Register.vue';
 
-const props = defineProps<{
+defineProps<{
     show: boolean;
-    type: 'login' | 'register' | null;
 }>();
 
 const emit = defineEmits(['close']);
@@ -30,16 +27,7 @@ const emit = defineEmits(['close']);
                     </button>
                 </div>
 
-                <div v-if="type === 'login'">
-                    <Login
-                        :can-reset-password="false"
-                        :can-register="true"
-                    ></Login>
-                </div>
-
-                <div v-if="type === 'register'">
-                    <Register></Register>
-                </div>
+                <slot></slot>
             </div>
         </div>
     </div>

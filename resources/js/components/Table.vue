@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { Link, router } from '@inertiajs/vue3';
+import Modal from '@/components/Modal.vue';
 
 const props = defineProps({
     fields: Array<string>,
@@ -15,6 +16,10 @@ const deleteRow = (id: number) => {
 </script>
 
 <template>
+    <Modal :show="true">
+        
+    </Modal>
+
     <div class="overflow-x-auto">
         <table class="table">
             <thead>

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import Modal from '@/components/Modal.vue';
 import Table from '@/components/Table.vue';
 import Layout from '@/layouts/Layout.vue';
 
