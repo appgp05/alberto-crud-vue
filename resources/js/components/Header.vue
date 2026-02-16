@@ -27,15 +27,20 @@ const emit = defineEmits<{
             Registrarme
         </button>
 
-        <Link
-            v-if="user"
-            :href="logout()"
-            method="post"
-            as="button"
-            class="btn btn-primary"
-        >
-            Cerrar sesión
-        </Link>
+        <div v-if="user">
+            <p class="font-bold text-white">
+                Bienvenido de nuevo, {{ user.name }}
+            </p>
+
+            <Link
+                :href="logout()"
+                method="post"
+                as="button"
+                class="btn btn-primary"
+            >
+                Cerrar sesión
+            </Link>
+        </div>
     </div>
 </template>
 
