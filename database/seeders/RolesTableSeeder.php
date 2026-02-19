@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
 class RolesTableSeeder extends Seeder
@@ -13,8 +14,11 @@ class RolesTableSeeder extends Seeder
     public function run(): void
     {
         //
-        Role::create(['name' => 'student']);
-        Role::create(['name' => 'teacher']);
-        Role::create(['name' => 'admin']);
+        $student = Role::create(['name' => 'student']);
+        $teacher = Role::create(['name' => 'teacher']);
+        $admin = Role::create(['name' => 'admin']);
+
+        $permissionSeeCrono = Permission::create(['name' => 'see crono']);
+        $teacher->givePermissionTo($permissionSeeCrono);
     }
 }
