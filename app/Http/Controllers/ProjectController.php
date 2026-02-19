@@ -20,6 +20,18 @@ class ProjectController extends Controller
         ]);
     }
 
+    public function create(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string',
+            'description' => 'nullable|string',
+        ]);
+
+        Project::create($validated);
+
+        return redirect()->back();
+    }
+
     public function update(Request $request, Project $project)
     {
         $validated = $request->validate([

@@ -11,6 +11,8 @@ const props = defineProps({
 
 const showModal = ref(false);
 
+const modalType = ref('none');
+
 const form = useForm(
     props.fields
         ? props.fields.reduce((acc, field) => ({ ...acc, [field]: '' }), {
@@ -19,7 +21,19 @@ const form = useForm(
         : { id: null },
 );
 
+const openCreateModal = () => {
+    modalType.value = 'create';
+    form.id = 0;
+    if (props.fields) {
+        props.fields.forEach((field) => {
+            form[field] = '';
+        });
+    }
+    showModal.value = true;
+};
+
 const openEditModal = (row: any) => {
+    modalType.value = 'edit';
     form.id = row.id;
     if (props.fields) {
         props.fields.forEach((field) => {
@@ -32,6 +46,12 @@ const openEditModal = (row: any) => {
 const closeModal = () => {
     showModal.value = false;
     form.reset();
+};
+
+const createRow = () => {
+    form.get(`${props.item}/create`, {
+        onSuccess: () => closeModal(),
+    });
 };
 
 const updateRow = () => {
@@ -50,7 +70,8 @@ const deleteRow = (id: number) => {
 <template>
     <Modal :show="showModal" @close="closeModal()">
         <div class="p-6">
-            <h3 class="mb-4 text-lg font-bold">Modificar {{ item }}</h3>
+            <h3 v-if="modalType == 'create'" class="mb-4 text-lg font-bold">Crear {{ item }}</h3>
+            <h3 v-if="modalType == 'edit'" class="mb-4 text-lg font-bold">Modificar {{ item }}</h3>
 
             <form @submit.prevent="updateRow" class="space-y-4">
                 <div v-for="field in fields" :key="field">
@@ -60,30 +81,8 @@ const deleteRow = (id: number) => {
                         v-model="form[field]"
                         class="input w-full rounded border p-2"
                     />
-                    <textarea v-if="field.includes('description')">
-
-                    </textarea>
+                    <textarea v-if="field.includes('description')"> </textarea>
                 </div>
-                <!--                <div>-->
-                <!--                    <label class="block text-sm font-medium">Nombre</label>-->
-                <!--                    <input-->
-                <!--                        v-model="form.name"-->
-                <!--                        type="text"-->
-                <!--                        class="w-full rounded border p-2"-->
-                <!--                        required-->
-                <!--                    />-->
-                <!--                    <div v-if="form.errors.name" class="text-xs text-red-500">-->
-                <!--                        {{ form.errors.name }}-->
-                <!--                    </div>-->
-                <!--                </div>-->
-
-                <!--                <div>-->
-                <!--                    <label class="block text-sm font-medium">Descripción</label>-->
-                <!--                    <textarea-->
-                <!--                        v-model="form.description"-->
-                <!--                        class="w-full rounded border p-2"-->
-                <!--                    ></textarea>-->
-                <!--                </div>-->
 
                 <div class="mt-4 flex justify-end gap-2">
                     <button
@@ -94,6 +93,16 @@ const deleteRow = (id: number) => {
                         Cancelar
                     </button>
                     <button
+                        v-if="modalType == 'create'"
+                        type="submit"
+                        @click="createRow"
+                        class="rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700"
+                        :disabled="form.processing"
+                    >
+                        {{ form.processing ? 'Creando...' : 'Crear' }}
+                    </button>
+                    <button
+                        v-if="modalType == 'edit'"
                         type="submit"
                         @click="updateRow"
                         class="rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700"
@@ -109,6 +118,9 @@ const deleteRow = (id: number) => {
     </Modal>
 
     <div class="overflow-x-auto">
+        <button @click="openCreateModal()" class="btn btn-primary">
+            Crear {{ item }}
+        </button>
         <table class="table">
             <thead>
                 <tr>

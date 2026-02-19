@@ -29,9 +29,18 @@ class UserController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
         //
+        $validated = $request->validate([
+            'name' => 'required|string',
+            'email' => 'required|string',
+            'password' => 'required|string',
+        ]);
+
+        User::create($validated);
+
+        return redirect()->back();
     }
 
     /**
