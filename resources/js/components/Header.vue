@@ -27,7 +27,7 @@ const emit = defineEmits<{
             Registrarme
         </button>
 
-        <div v-if="user">
+        <div v-if="user" class="w-full h-full flex items-center justify-evenly">
             <p class="font-bold text-white">
                 Bienvenido de nuevo, {{ user.name }}
             </p>

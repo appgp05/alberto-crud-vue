@@ -13,7 +13,7 @@ const hasPermission = (permission: string) => {
 </script>
 
 <template>
-    <div>
+    <div class="flex gap-4 p-4">
         <a href="main" class="btn btn-primary">Main</a>
         <a href="users-list" class="btn btn-primary">Usuarios</a>
         <a href="projects-list" class="btn btn-primary">Projects</a>

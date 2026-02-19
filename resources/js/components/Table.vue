@@ -117,19 +117,21 @@ const deleteRow = (id: number) => {
         </div>
     </Modal>
 
-    <div class="overflow-x-auto">
-        <button @click="openCreateModal()" class="btn btn-primary">
+    <div class="overflow-x-auto  p-10">
+        <button @click="openCreateModal()" class="w-full btn btn-success">
             Crear {{ item }}
         </button>
         <table class="table">
-            <thead>
+            <thead class="bg-blue-300">
                 <tr>
                     <th v-for="field in fields" :key="field">
                         {{ field }}
                     </th>
+                    <th>Modificar</th>
+                    <th>Eliminar</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody class="bg-blue-200">
                 <tr v-for="row in rows?.data" :key="row.id">
                     <td v-for="field in fields" :key="field">
                         {{ row[field] }}
@@ -137,7 +139,7 @@ const deleteRow = (id: number) => {
                     <td>
                         <button
                             @click="openEditModal(row)"
-                            class="rounded bg-yellow-500 px-3 py-1 text-sm text-white transition hover:bg-yellow-600"
+                            class="btn btn-warning"
                         >
                             Modificar
                         </button>
@@ -145,7 +147,7 @@ const deleteRow = (id: number) => {
                     <td>
                         <button
                             @click="deleteRow(row.id)"
-                            class="btn btn-primary"
+                            class="btn btn-error"
                         >
                             Eliminar
                         </button>
