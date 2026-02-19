@@ -13,7 +13,7 @@ Route::get('/main', function () {
 
 Route::get('/cronometro', function () {
     return Inertia::render('Cronometro');
-})->name('cronometro');
+})->middleware('role:teacher')->name('cronometro');
 
 Route::get('/users-list', [UserController::class, 'index'])->name('users-list');
 Route::get('/projects-list', [ProjectController::class, 'index'])->name('projects-list');

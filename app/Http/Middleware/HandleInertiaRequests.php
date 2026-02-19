@@ -40,7 +40,8 @@ class HandleInertiaRequests extends Middleware
             'name' => config('app.name'),
             'auth' => [
                 'user' => $request->user(),
-                'can' => $request->user()->getAllPermissions(),
+                'can' => $request->user()?->getAllPermissions() ?? [],
+                'role' => $request->user()?->getRoleNames() ?? [],
             ],
             'sidebarOpen' => ! $request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
         ];
