@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { usePage } from '@inertiajs/vue3';
+import { computed, ref } from 'vue';
 import Header from '@/components/Header.vue';
 import Modal from '@/components/Modal.vue';
 import Nav from '@/components/Nav.vue';
@@ -18,6 +19,8 @@ const closeModal = () => {
     isModalOpen.value = false;
     modalType.value = null;
 };
+
+const user = computed(() => usePage().props.auth.user);
 </script>
 
 <template>
@@ -31,8 +34,13 @@ const closeModal = () => {
         </div>
     </Modal>
     <Header @open-modal="openModal"></Header>
-    <Nav></Nav>
-    <slot></slot>
+    <Nav v-if="user"></Nav>
+    <slot v-if="user"></slot>
+    <div v-if="!user" class="intems-center flex h-full w-full justify-center">
+        <p class="text-xl font-bold text-red-700">
+            Debes iniciar sesión para poder acceder al contenido de la página
+        </p>
+    </div>
 </template>
 
 <style scoped></style>
